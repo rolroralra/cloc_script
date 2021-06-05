@@ -52,7 +52,7 @@ function cloc-count-print() {
   done
 }
 
-for GIT_REPO_URL in $(curl https://api.github.com/users/${USER_NAME}/repos 2>/dev/null | yq e '.[].html_url' -)
+for GIT_REPO_URL in $(curl https://api.github.com/users/${USER_NAME}/repos 2>/dev/null | yq e '.[] | select(.fork == false) | .html_url' -)
 do
   echo "[${GIT_REPO_URL}] Checking..."
   cloc-git ${GIT_REPO_URL} > result.yaml &&
